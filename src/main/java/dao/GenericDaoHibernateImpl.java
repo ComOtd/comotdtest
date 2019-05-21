@@ -29,8 +29,8 @@ public class GenericDaoHibernateImpl<E, K> implements GenericDao <E, K> {
 
     @Override
     public List<E> getAll() {
-        Query query = entityManager.createNativeQuery("SELECT * FROM " + entityClass.getSimpleName());
-        return query.getResultList();
+        List<E> list = entityManager.createQuery("SELECT e FROM  " + entityClass.getSimpleName()+" e").getResultList();
+        return list;
     }
 
     @Override

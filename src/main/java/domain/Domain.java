@@ -17,17 +17,8 @@ import static bl.HibernateUtil.getEm;
 public class Domain {
     public static void main(String[] args) throws SQLException{
 
-        EntityManager entityManager = getEm();
-        entityManager.getTransaction().begin();
-
-
-
         Category category = new Category();
         category.setName("Овощи");
-
-        entityManager.persist(category);
-        entityManager.getTransaction().commit();
-        entityManager.close();
 
         Food food = new Food();
         food.setName("Помидор");
@@ -66,13 +57,21 @@ public class Domain {
         System.out.println(dish);
         System.out.println(composition);
 
+        GenericDaoHibernateImpl<Category, Long> categoryDAO = new GenericDaoHibernateImpl<>(Category.class);
+        FoodDAOImpl foodDAO = new FoodDAOImpl(Food.class);
 
-        GenericDaoHibernateImpl<Food, Long> foodDAO = new GenericDaoHibernateImpl <>(Food.class);
+        categoryDAO.save(category);
         foodDAO.save(food);
         foodDAO.save(food2);
         List<Food> foods = foodDAO.getAll();
 
-        System.out.println(Arrays.toString(foods.toArray()));
+        Food food1 = foodDAO.get((long) 2);
+
+        System.out.println(food1);
+        System.out.println(foods);
+
+        System.out.println(foodDAO.getByName("Огурец"));
+
 
 
 
