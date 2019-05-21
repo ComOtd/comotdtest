@@ -71,16 +71,5 @@ public class Domain {
         System.out.println(foods);
 
         System.out.println(foodDAO.getByName("Огурец"));
-
-
-
-
-//        entityManager.persist(composition);
-
-//        entityManager.persist(food);
-//        entityManager.persist(food2);
-//        entityManager.persist(dish);
-
-
     }
 }
