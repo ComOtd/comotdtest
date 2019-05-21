@@ -3,7 +3,6 @@ package dao;
 import entity.Food;
 
 import java.sql.SQLException;
-import java.util.Queue;
 
 public class FoodDAOImpl extends GenericDaoHibernateImpl<Food, Long> implements FoodDAO {
 

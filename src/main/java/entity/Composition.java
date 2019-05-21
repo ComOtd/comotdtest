@@ -1,18 +1,38 @@
 package entity;
 
+
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @Entity
 public class Composition extends AbstractIdentifiableObject{
 
     @Getter
     @Setter
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Food.class, cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="FOOD_ID")
-    private Food food;
+    Food food;
+
+    @ManyToMany(mappedBy = "compositions")
+    Set<Dish> dishes = new HashSet<>();
+
+    @Getter
+    @Setter
+    double weight;
+
+    public Composition(Food food, double weight) {
+        this.food = food;
+        this.weight = weight;
+    }
 
     @Override
     public String toString() {
@@ -22,7 +42,4 @@ public class Composition extends AbstractIdentifiableObject{
                 '}';
     }
 
-    @Getter
-    @Setter
-    private double weight;
 }

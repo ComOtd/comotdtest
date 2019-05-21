@@ -1,29 +1,43 @@
 package entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Dish extends AbstractIdentifiableObject{
-    @Getter
-    @Setter
-    private String name;
 
     @Getter
     @Setter
-    @OneToMany(fetch = FetchType.EAGER, targetEntity = Composition.class, cascade=CascadeType.ALL)
-    @JoinColumn(name="DISH_ID")
-    private Set<Composition> composition;
+    String name;
+
+    @Getter
+    @Setter
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "RECEPT",
+            joinColumns = @JoinColumn(name = "dish_id"),
+            inverseJoinColumns = @JoinColumn(name = "composition_id"))
+    Set<Composition> compositions = new HashSet<>();
+
+    public void addComposition(Composition composition){
+        compositions.add(composition);
+    }
+
+    public void removeComposition(Composition composition){
+        compositions.remove(composition);
+    }
 
     @Override
     public String toString() {
            return "Dish{" +
                 ", name='" + name + '\'' +
-                ", composition=" + composition.stream().map(Composition :: getFood).map(Food :: getName).collect(Collectors.joining(", ")) +
+                ", composition=" + compositions +
                 '}';
     }
 }

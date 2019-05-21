@@ -1,38 +1,47 @@
 package entity;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.util.Set;
 
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @Entity
 public class Food extends AbstractIdentifiableObject{
 
-    @Getter
-    @Setter
-    private String name;
 
     @Getter
     @Setter
-    private double proteins;
+    String name;
 
     @Getter
     @Setter
-    private double fats;
+    double proteins;
 
     @Getter
     @Setter
-    private double carbohydrates;
+    double fats;
 
     @Getter
     @Setter
-    private double calories;
+    double carbohydrates;
 
     @Getter
     @Setter
-    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
-    @JoinColumn(name="CATEGORY")
-    private Category category;
+    double calories;
+
+    @Getter
+    @Setter
+    @ManyToOne(fetch = FetchType.EAGER)
+    Category category;
+
+    @OneToMany(mappedBy="food", cascade=CascadeType.ALL)
+    Set<Composition> compositions;
 
     @Override
     public String toString() {

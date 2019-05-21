@@ -5,11 +5,9 @@
 <persistence-unit name="thePersistenceUnit">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <properties>
-        <property name="hibernate.hbm2ddl.auto" value="create"/>
+        <property name="hibernate.hbm2ddl.auto" value="update"/>
         <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
         <property name="hibernate.connection.url" value="jdbc:h2:~\java\dbh2\test"/>
-        <property name="hibernate.hbm2ddl.auto" value="create"/>
-        <property name="show_sql" value = "true"/>
         <property name="hibernate.connection.username" value="sa" />
         <property name="hibernate.connection.password" value="" />
     </properties>
